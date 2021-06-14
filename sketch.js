@@ -4,26 +4,46 @@
 var song
 var fft
 var particles = []
+var img
 
 function preload() {
   song = loadSound('destiny.mp3')
+  img = loadImage('bg.jpg')
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   angleMode(DEGREES)
-  fft = new p5.FFT()
+  rectMode(CENTER)
+  imageMode(CENTER)
+  fft = new p5.FFT(0.3)
+
+  img.filter(BLUR, 12)
 }
 
 function draw() {
-  background(50);
-  stroke(255)
-  strokeWeight(3)
-  noFill()
+  background(150);
   translate(width / 2, height / 2)
 
   fft.analyze()
   amp = fft.getEnergy(20, 200)
+
+  push()
+  if(amp > 230) {
+    rotate(random(-0.5, 0.5))
+  }
+
+  image(img, 0, 0, width + 100, height + 100)
+  pop()
+
+  var alpha = map(amp, 0, 255, 180, 150)
+  fill(0, alpha)
+  noStroke()
+  rect(0, 0, width, height)
+
+  stroke(255)
+  strokeWeight(3)
+  noFill()
 
   var wave = fft.waveform()
 
