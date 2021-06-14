@@ -43,8 +43,12 @@ function draw() {
   particles.push(p)
 
   for(var i = 0; i < particles.length; i++) {
-    particles[i].update()
-    particles[i].show()
+    if(!particles[i].edges()) {
+      particles[i].update()
+      particles[i].show()
+    } else {
+      particles.splice(i, 1)
+    }
   }
 }
 
@@ -69,6 +73,15 @@ class Particle {
   update() {
     this.vel.add(this.acc)
     this.pos.add(this.vel)
+  }
+
+  edges() {
+    if(this.pos.x < -width / 2 || this.pos.x > width /2 || 
+    this.pos.y < -height / 2 || this.pos.y > height / 2) {
+      return true
+    } else {
+        return false
+    }
   }
 
   show() {
