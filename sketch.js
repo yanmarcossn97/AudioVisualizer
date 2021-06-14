@@ -43,6 +43,7 @@ function draw() {
   particles.push(p)
 
   for(var i = 0; i < particles.length; i++) {
+    particles[i].update()
     particles[i].show()
   }
 }
@@ -63,6 +64,11 @@ class Particle {
     this.vel = createVector(0, 0)
     this.acc = this.pos.copy().mult(random(0.0001, 0.00001))
     this.w = random(3, 5)
+  }
+
+  update() {
+    this.vel.add(this.acc)
+    this.pos.add(this.vel)
   }
 
   show() {
