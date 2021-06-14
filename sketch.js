@@ -42,7 +42,7 @@ function draw() {
   var p = new Particle()
   particles.push(p)
 
-  for(var i = 0; i < particles.length; i++) {
+  for(var i = particles.length - 1; i >= 0; i--) {
     if(!particles[i].edges()) {
       particles[i].update()
       particles[i].show()
