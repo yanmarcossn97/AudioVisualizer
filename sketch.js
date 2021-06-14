@@ -19,7 +19,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(960, 540); // this output a 1920x1080 res
   angleMode(DEGREES)
   rectMode(CENTER)
   imageMode(CENTER)
@@ -47,7 +47,7 @@ function draw() {
   }
 
   // duration in milliseconds
-  var duration = 3000;
+  var duration = 10000;
 
   // compute how far we are through the animation as a value between 0 and 1.
   var elapsed = millis() - startMillis;
