@@ -18,8 +18,12 @@ function setup() {
 function draw() {
   background(50);
   stroke(255)
+  strokeWeight(3)
   noFill()
   translate(width / 2, height / 2)
+
+  fft.analyze()
+  amp = fft.getEnergy(20, 200)
 
   var wave = fft.waveform()
 
@@ -44,7 +48,7 @@ function draw() {
 
   for(var i = particles.length - 1; i >= 0; i--) {
     if(!particles[i].edges()) {
-      particles[i].update()
+      particles[i].update(amp > 230)
       particles[i].show()
     } else {
       particles.splice(i, 1)
@@ -68,11 +72,18 @@ class Particle {
     this.vel = createVector(0, 0)
     this.acc = this.pos.copy().mult(random(0.0001, 0.00001))
     this.w = random(3, 5)
+    this.color = [random(200, 255), random(200, 255), random(200, 255)]
   }
 
-  update() {
+  update(cond) {
     this.vel.add(this.acc)
     this.pos.add(this.vel)
+
+    if(cond) {
+      this.pos.add(this.vel)
+      this.pos.add(this.vel)
+      this.pos.add(this.vel)
+    }
   }
 
   edges() {
@@ -86,7 +97,7 @@ class Particle {
 
   show() {
     noStroke()
-    fill(255)
+    fill(this.color)
     ellipse(this.pos.x, this.pos.y, this.w)
   }
 }
